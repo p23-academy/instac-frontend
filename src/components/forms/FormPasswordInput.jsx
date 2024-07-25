@@ -4,7 +4,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const FormPasswordInput = ({
   className,
-  id,
+  name,
   label,
   required,
 }) => {
@@ -13,16 +13,16 @@ const FormPasswordInput = ({
   return (
     <div className={`flex flex-col gap-1 ${className}`}>
       <div className={"flex justify-between"}>
-        <label htmlFor={id}>{label}</label>
-        <button onClick={() => setShowPassword(!showPassword)}>
+        <label htmlFor={name}>{label}</label>
+        <button type={"button"} onClick={() => setShowPassword(!showPassword)}>
           {showPassword ? <VisibilityOffIcon fontSize={"small"}/> : <VisibilityIcon fontSize={"small"}/>}
         </button>
       </div>
       <input
         className={"border border-black rounded px-2 py-1"}
-        key={id}
-        id={id}
-        name={id}
+        key={name}
+        id={name}
+        name={name}
         type={showPassword ? "text" : "password"}
         required={required}
       />
