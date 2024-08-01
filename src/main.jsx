@@ -6,8 +6,9 @@ import App from './App.jsx'
 import {createBrowserRouter, RouterProvider,} from "react-router-dom";
 import LoginScreen, {loginScreenAction} from "./ui/auth/LoginScreen.jsx";
 import AppLayout from "./ui/app/AppLayout.jsx";
-import HomeScreen from "./ui/app/home/HomeScreen.jsx";
+import HomeScreen, {homeScreenLoader} from "./ui/app/home/HomeScreen.jsx";
 import MessagesScreen from "./ui/app/messages/MessagesScreen.jsx";
+import NewPostScreen, {newPostAction} from "./ui/app/new-post/NewPostScreen.jsx";
 
 const router = createBrowserRouter([
   {
@@ -25,11 +26,17 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/app/home",
+        loader: homeScreenLoader,
         element: <HomeScreen/>,
       },
       {
         path: "/app/messages",
         element: <MessagesScreen/>,
+      },
+      {
+        path: "/app/new",
+        element: <NewPostScreen/>,
+        action: newPostAction,
       },
     ]
   },

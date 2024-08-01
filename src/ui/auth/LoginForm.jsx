@@ -10,7 +10,7 @@ const LoginForm = () => {
       <input type="hidden" name="formId" value="login"/>
       <FormInput name="email" label="Email" type="email" required/>
       <FormPasswordInput name="password" label="Password" required/>
-      <Button className={"mt-4"} text={"Login"} type={"submit"}/>
+      <Button className={"mt-4"} type={"submit"}>Login</Button>
     </Form>
   )
 }

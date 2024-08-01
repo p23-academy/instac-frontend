@@ -1,19 +1,16 @@
 import HomePostView from "./HomePostView.jsx";
 import HomeFriendView from "./HomeFriendView.jsx";
 import HomeUserView from "./HomeUserView.jsx";
+import {getPostsForHome} from "../../../data/firebase/firebaseDatabase.js";
+import {useLoaderData} from "react-router-dom";
+
+export const homeScreenLoader = async () => {
+  const posts = await getPostsForHome()
+  return {posts}
+}
 
 const HomeScreen = () => {
-  const post = {
-    author: {
-      name: "Bik",
-      date: new Date(),
-      imageUrl: "https://easydrawingguides.com/wp-content/uploads/2022/07/bull-head-_-face-11.png"
-    },
-    comment: "We were a proud part of the @prideinliverpool march across the city today 🙌",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/d/db/Taureau_charolais_au_pr%C3%A9.jpg",
-    likesCount: 23242,
-    commentsCount: 5,
-  }
+  const {posts} = useLoaderData()
 
   return (
     <div className={"w-full h-screen overflow-y-auto flex gap-4 p-4"}>
@@ -28,23 +25,18 @@ const HomeScreen = () => {
         </div>
         {/*posts*/}
         <div className={"flex flex-col gap-4"}>
-          <HomePostView post={post} />
-          <HomePostView post={post} />
-          <HomePostView post={post} />
-          <HomePostView post={post} />
-          <HomePostView post={post} />
-          <HomePostView post={post} />
+          {posts.map(post => <HomePostView key={post.id} post={post}/>)}
         </div>
       </div>
       <div className={"flex flex-col gap-2 w-3/12 pt-12"}>
         {/*profile*/}
-        <HomeUserView />
+        <HomeUserView/>
         {/*suggestions*/}
         <h5 className={"text-gray-800"}>Suggested for you</h5>
-        <HomeUserView />
-        <HomeUserView />
-        <HomeUserView />
-        <HomeUserView />
+        <HomeUserView/>
+        <HomeUserView/>
+        <HomeUserView/>
+        <HomeUserView/>
       </div>
     </div>
   )

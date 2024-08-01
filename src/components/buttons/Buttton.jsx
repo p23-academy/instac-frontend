@@ -2,7 +2,7 @@ import {useNavigation} from "react-router-dom";
 
 const Button = ({
   className,
-  text,
+  children,
   onClick,
   type
 }) => {
@@ -17,7 +17,7 @@ const Button = ({
       type={type || "button"}
       disabled={isDisabled}
     >
-      {text}
+      {children}
     </button>
   )
 }

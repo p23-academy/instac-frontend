@@ -6,6 +6,7 @@ import ForumIcon from '@mui/icons-material/Forum';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Face2Icon from '@mui/icons-material/Face2';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import {signOutUser} from "../../data/firebase/firebaseAuth.js";
 
 const AppLayoutSidebar = () => {
@@ -23,6 +24,7 @@ const AppLayoutSidebar = () => {
         <h1 className={"font-sans text-4xl font-bold text-white"}>Instać</h1>
       </div>
       <div className={"border-b border-white my-4"} />
+      <SidebarButton onClick={() => navigate("/app/new")} icon={<AddAPhotoIcon/>}>New Post</SidebarButton>
       <SidebarButton onClick={() => navigate("/app/home")} icon={<HomeIcon/>}>Home</SidebarButton>
       <SidebarButton onClick={() => navigate("/app/search")} icon={<SearchIcon/>}>Search</SidebarButton>
       <SidebarButton onClick={() => navigate("/app/explore")} icon={<ExploreIcon/>}>Explore</SidebarButton>
