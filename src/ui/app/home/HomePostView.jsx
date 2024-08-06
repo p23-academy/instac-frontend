@@ -12,7 +12,7 @@ const HomePostView = ({post}) => {
       <div className={"flex gap-2 items-center"}>
         <img className={"w-8 h-8 rounded-full"} src={post.author.imageUrl}/>
         <span className={"text-lg font-medium"}>{post.author.name}</span>
-        <span className={"text-lg"}>{post.author.date.toDate().toDateString()}</span>
+        <span className={"text-lg"}>{post.date.toDate().toDateString()}</span>
       </div>
       {/*image*/}
       <div>

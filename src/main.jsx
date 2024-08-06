@@ -5,10 +5,12 @@ import './data/firebase/firebase.js'
 import App from './App.jsx'
 import {createBrowserRouter, RouterProvider,} from "react-router-dom";
 import LoginScreen, {loginScreenAction} from "./ui/auth/LoginScreen.jsx";
-import AppLayout from "./ui/app/AppLayout.jsx";
+import AppLayout, {appLayoutLoader} from "./ui/app/AppLayout.jsx";
 import HomeScreen, {homeScreenLoader} from "./ui/app/home/HomeScreen.jsx";
 import MessagesScreen from "./ui/app/messages/MessagesScreen.jsx";
 import NewPostScreen, {newPostAction} from "./ui/app/new-post/NewPostScreen.jsx";
+import {Provider} from "react-redux";
+import store from "./data/store/store.js";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +24,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/app",
+    loader: appLayoutLoader,
     element: <AppLayout/>,
     children: [
       {
@@ -44,6 +47,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router}/>
+    <Provider store={store}>
+      <RouterProvider router={router}/>
+    </Provider>
   </React.StrictMode>,
 )
