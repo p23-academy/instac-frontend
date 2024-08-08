@@ -13,7 +13,7 @@ export const loginScreenAction = async ({request}) => {
   const {user, error} =
     await (formId === "login" ? signInUser(email, password) : registerUser(username, email, password))
   if (user) {
-    return redirect("/app")
+    return redirect("/app/home")
   }
   return {error}
 }

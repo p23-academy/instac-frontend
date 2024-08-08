@@ -3,6 +3,7 @@ import HomeFriendView from "./HomeFriendView.jsx";
 import HomeUserView from "./HomeUserView.jsx";
 import {getPostsForHome} from "../../../data/firebase/firebaseDatabase.js";
 import {useLoaderData} from "react-router-dom";
+import {getLoggedInUser} from "../../../data/firebase/firebaseAuth.js";
 
 export const homeScreenLoader = async () => {
   const posts = await getPostsForHome()
@@ -11,6 +12,12 @@ export const homeScreenLoader = async () => {
 
 const HomeScreen = () => {
   const {posts} = useLoaderData()
+
+  const user = {
+    name: "igraona.gvu",
+    email: "igraona@p23.io",
+    imageUrl: "https://easydrawingguides.com/wp-content/uploads/2022/07/bull-head-_-face-11.png"
+  }
 
   return (
     <div className={"w-full h-screen overflow-y-auto flex gap-4 p-4"}>
@@ -30,13 +37,14 @@ const HomeScreen = () => {
       </div>
       <div className={"flex flex-col gap-2 w-3/12 pt-12"}>
         {/*profile*/}
-        <HomeUserView/>
+        <HomeUserView user={getLoggedInUser()}/>
         {/*suggestions*/}
         <h5 className={"text-gray-800"}>Suggested for you</h5>
-        <HomeUserView/>
-        <HomeUserView/>
-        <HomeUserView/>
-        <HomeUserView/>
+        <HomeUserView user={user}/>
+        <HomeUserView user={user}/>
+        <HomeUserView user={user}/>
+        <HomeUserView user={user}/>
+        <HomeUserView user={user}/>
       </div>
     </div>
   )

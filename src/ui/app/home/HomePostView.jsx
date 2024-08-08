@@ -11,7 +11,7 @@ const HomePostView = ({post}) => {
       {/*header*/}
       <div className={"flex gap-2 items-center"}>
         <img className={"w-8 h-8 rounded-full"} src={post.author.imageUrl}/>
-        <span className={"text-lg font-medium"}>{post.author.name}</span>
+        <span className={"text-lg font-medium"}>{post.author.username}</span>
         <span className={"text-lg"}>{post.date.toDate().toDateString()}</span>
       </div>
       {/*image*/}
@@ -34,7 +34,7 @@ const HomePostView = ({post}) => {
       <div>
         <p className={"text-md"}>
           <Link to={`/app/users/${post.author.id}`}>
-            <span className={"font-medium"}>{post.author.name}</span>
+            <span className={"font-medium"}>{post.author.username}</span>
           </Link>
           <span> {post.comment}</span>
         </p>

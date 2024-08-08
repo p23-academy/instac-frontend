@@ -1,20 +1,12 @@
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  updateProfile,
-  signOut
-} from "firebase/auth";
+import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut} from "firebase/auth";
+import {saveUser} from "./firebaseDatabase.js";
+import store from "../store/store.js";
 
 const auth = getAuth();
 
-export const getUser = () => { // TODO zaminut fajerbejsom
-  return {
-    id: localStorage.getItem("id"),
-    name: localStorage.getItem("name"),
-    email: localStorage.getItem("email"),
-    imageUrl: "https://easydrawingguides.com/wp-content/uploads/2022/07/bull-head-_-face-11.png"
-  }
+export const getLoggedInUser = () => {
+  const state = store.getState()
+  return state.auth.user
 }
 
 export const signInUser = async (email, password) => {
@@ -22,9 +14,6 @@ export const signInUser = async (email, password) => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user
     localStorage.setItem("token", user.accessToken)
-    localStorage.setItem("id", user.uid) // TODO obrisat
-    localStorage.setItem("email", user.email) // TODO obrisat
-    localStorage.setItem("name", user.displayName) // TODO obrisat
     return {user}
   } catch (error) {
     console.error(error)
@@ -35,14 +24,17 @@ export const signInUser = async (email, password) => {
 export const registerUser = async (username, email, password) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    await updateProfile(auth.currentUser, {
-      displayName: username
-    })
     const user = userCredential.user
+    const userData = {
+      id: user.uid,
+      email: email,
+      username: username,
+      imageUrl: "",
+      name: "",
+      bio: "",
+    }
+    await saveUser(user.uid, userData)
     localStorage.setItem("token", user.accessToken)
-    localStorage.setItem("id", user.uid) // TODO obrisat
-    localStorage.setItem("email", user.email) // TODO obrisat
-    localStorage.setItem("name", user.displayName) // TODO obrisat
     return {user}
   } catch (error) {
     console.error(error)

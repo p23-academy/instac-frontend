@@ -4,6 +4,8 @@ const FormInput = ({
   type,
   label,
   required,
+  disabled,
+  initialValue,
 }) => {
   return (
     <div className={`flex flex-col gap-1 ${className}`}>
@@ -15,6 +17,8 @@ const FormInput = ({
         name={name}
         type={type || "text"}
         required={required}
+        disabled={disabled}
+        defaultValue={initialValue}
       />
     </div>
   )

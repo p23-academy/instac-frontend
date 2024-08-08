@@ -5,14 +5,12 @@ import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import {CircularProgress} from "@mui/material";
 import {Form, redirect} from "react-router-dom";
 import {postNewPost} from "../../../data/firebase/firebaseDatabase.js";
-import {useSelector} from "react-redux";
 
 export const newPostAction = async ({request}) => {
   const formData = await request.formData()
   const post = {
     imageUrl: formData.get("imageUrl"),
     comment: formData.get("comment"),
-    author: JSON.parse(formData.get("user"))
   }
   await postNewPost(post)
   return redirect("/app/home")
@@ -20,7 +18,6 @@ export const newPostAction = async ({request}) => {
 
 const NewPostScreen = () => {
   const inputRef = useRef(null);
-  const {user} = useSelector(state => state.auth)
 
   const [imageUrl, setImageUrl] = useState("");
   const [uploading, setUploading] = useState(false)
@@ -62,7 +59,6 @@ const NewPostScreen = () => {
           <input type={"hidden"} name={"imageUrl"} value={imageUrl}/>
           <p className={"font-medium"}>Comment:</p>
           <textarea className={"resize-none w-96 h-24 p-2"} name={"comment"}/>
-          <input type={"hidden"} name={"user"} value={JSON.stringify(user)}/>
           <Button type={"submit"} className={"w-32"}>Post</Button>
         </Form>
       </div>

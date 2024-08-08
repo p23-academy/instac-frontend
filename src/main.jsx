@@ -11,6 +11,8 @@ import MessagesScreen from "./ui/app/messages/MessagesScreen.jsx";
 import NewPostScreen, {newPostAction} from "./ui/app/new-post/NewPostScreen.jsx";
 import {Provider} from "react-redux";
 import store from "./data/store/store.js";
+import UserScreen, {userScreenLoader} from "./ui/app/users/UserScreen.jsx";
+import UserEditScreen, {userEditScreenAction, userEditScreenLoader} from "./ui/app/users/UserEditScreen.jsx";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +42,17 @@ const router = createBrowserRouter([
         path: "/app/new",
         element: <NewPostScreen/>,
         action: newPostAction,
+      },
+      {
+        path: "/app/users/:userId",
+        element: <UserScreen/>,
+        loader: userScreenLoader,
+      },
+      {
+        path: "/app/users/:userId/edit",
+        element: <UserEditScreen/>,
+        loader: userEditScreenLoader,
+        action: userEditScreenAction,
       },
     ]
   },
