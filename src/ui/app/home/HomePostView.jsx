@@ -1,10 +1,13 @@
 import {Link} from "react-router-dom";
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import CommentIcon from '@mui/icons-material/Comment';
 import ShareIcon from '@mui/icons-material/Share';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import LikePostButton from "../../../components/posts/LikePostButton.jsx";
+import {useSelector} from "react-redux";
+import {postsSelector} from "../../../data/store/postsSlice.js";
 
-const HomePostView = ({post}) => {
+const HomePostView = ({postId}) => {
+  const post = useSelector(state => postsSelector.selectById(state, postId));
 
   return (
     <div className={"flex flex-col gap-2 w-96"}>
@@ -20,10 +23,10 @@ const HomePostView = ({post}) => {
       </div>
       {/*action buttons*/}
       <div className={"flex gap-2 w-full"}>
-        <button><FavoriteBorderIcon/></button>
+        <LikePostButton postId={postId}/>
         <button><CommentIcon/></button>
         <button><ShareIcon/></button>
-        <div className={"flex-grow"} />
+        <div className={"flex-grow"}/>
         <button><BookmarkBorderIcon/></button>
       </div>
       {/*likes count*/}

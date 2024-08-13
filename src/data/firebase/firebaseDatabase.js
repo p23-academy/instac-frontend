@@ -1,4 +1,18 @@
-import {addDoc, collection, doc, getDoc, getDocs, getFirestore, query, setDoc, where} from "firebase/firestore";
+import {
+  addDoc,
+  arrayRemove,
+  arrayUnion,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+  increment,
+  query,
+  setDoc,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import {getLoggedInUser} from "./firebaseAuth.js";
 
 const db = getFirestore();
@@ -27,6 +41,7 @@ export const postNewPost = async (post) => {
   await addDoc(postsRef, {
     ...post,
     author: loggedInUser,
+    likes: [],
     likesCount: 0,
     commentsCount: 0,
     date: new Date(),
@@ -52,4 +67,33 @@ export const getPostsByUser = async (userId) => {
     id: snapshot.id,
   }))
   return posts
+}
+
+export const likePost = async (postId) => {
+  const postRef = doc(db, "posts", postId);
+  const loggedUser = getLoggedInUser()
+  await updateDoc(postRef, {
+    likesCount: increment(1),
+    likes: arrayUnion(loggedUser.id)
+  });
+}
+
+export const unlikePost = async (postId) => {
+  const postRef = doc(db, "posts", postId);
+  const loggedUser = getLoggedInUser()
+  await updateDoc(postRef, {
+    likesCount: increment(-1),
+    likes: arrayRemove(loggedUser.id)
+  });
+}
+
+export const isPostAlreadyLiked = async (postId) => {
+  const postRef = doc(db, "posts", postId);
+  const loggedUser = getLoggedInUser()
+  const postSnap = await getDoc(postRef)
+  if (postSnap.exists()) {
+    return postSnap.data().likes.includes(loggedUser.id)
+  } else {
+    return false
+  }
 }

@@ -1,22 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit'
+import {createEntityAdapter, createSlice} from '@reduxjs/toolkit'
 
-const initialState = {
-  homePosts: [],
-  selectedPost: {},
-}
+const postsAdapter = createEntityAdapter({
+  // Assume IDs are stored in a field other than `post.id`
+  selectId: (post) => post.id,
+  // Keep the "all IDs" array sorted based on post titles
+  sortComparer: (a, b) => a.date.toDate() < b.date.toDate() ? 1 : -1,
+})
 
 const postsSlice = createSlice({
   name: 'posts',
-  initialState,
+  initialState: postsAdapter.getInitialState(),
   reducers: {
-    setHomePosts: (state, action) => {
-      state.homePosts = action.payload;
-    },
-    setSelectedPost: (state, action) => {
-      state.selectedPost = action.payload;
-    },
+    setPost: postsAdapter.setOne,
+    setPosts: postsAdapter.setMany,
   },
 })
 
-export const {setHomePosts, setSelectedPost} = postsSlice.actions;
+export const {setPost, setPosts} = postsSlice.actions;
+
+export const postsSelector = postsAdapter.getSelectors((state) => state.posts)
+
 export default postsSlice

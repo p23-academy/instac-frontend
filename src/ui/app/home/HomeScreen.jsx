@@ -2,16 +2,20 @@ import HomePostView from "./HomePostView.jsx";
 import HomeFriendView from "./HomeFriendView.jsx";
 import HomeUserView from "./HomeUserView.jsx";
 import {getPostsForHome} from "../../../data/firebase/firebaseDatabase.js";
-import {useLoaderData} from "react-router-dom";
 import {getLoggedInUser} from "../../../data/firebase/firebaseAuth.js";
+import store from "../../../data/store/store.js";
+import {setPosts} from "../../../data/store/postsSlice.js";
+import {useSelector} from "react-redux";
 
 export const homeScreenLoader = async () => {
   const posts = await getPostsForHome()
-  return {posts}
+  store.dispatch(setPosts(posts))
+  return null
 }
 
 const HomeScreen = () => {
-  const {posts} = useLoaderData()
+  const posts = useSelector(state => state.posts)
+  console.log(posts)
 
   const user = {
     name: "igraona.gvu",
@@ -32,7 +36,8 @@ const HomeScreen = () => {
         </div>
         {/*posts*/}
         <div className={"flex flex-col gap-4"}>
-          {posts.map(post => <HomePostView key={post.id} post={post}/>)}
+          {posts.ids.map(postId => <HomePostView key={postId} postId={postId}/>)}
+          {/*{Object.keys(postsMap).map(postId => <HomePostView key={postId} post={postsMap.postId}/>)}*/}
         </div>
       </div>
       <div className={"flex flex-col gap-2 w-3/12 pt-12"}>
