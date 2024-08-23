@@ -7,7 +7,7 @@ import {useSelector} from "react-redux";
 import {postsSelector} from "../../../data/store/postsSlice.js";
 import {usersSelector} from "../../../data/store/usersSlice.js";
 
-const HomePostView = ({postId}) => {
+const UserPostView = ({postId}) => {
   const post = useSelector(state => postsSelector.selectById(state, postId));
   const postAuthor = useSelector(state => usersSelector.selectById(state, post.author))
 
@@ -23,7 +23,7 @@ const HomePostView = ({postId}) => {
       </div>
       {/*image*/}
       <div>
-        <img className={"w-full h-auto"} src={post.imageUrl}/>
+        <img className={"w-full h-auto aspect-square object-cover"} src={post.imageUrl}/>
       </div>
       {/*action buttons*/}
       <div className={"flex gap-2 w-full"}>
@@ -46,13 +46,8 @@ const HomePostView = ({postId}) => {
           <span> {post.comment}</span>
         </p>
       </div>
-      {/*view add comments*/}
-      <div className={"flex flex-col text-sm text-gray-400"}>
-        <p>View all {post.commentsCount} comments</p>
-        <p>Add a new comment</p>
-      </div>
     </div>
   )
 }
 
-export default HomePostView
+export default UserPostView

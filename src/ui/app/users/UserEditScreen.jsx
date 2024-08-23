@@ -8,7 +8,9 @@ import {CircularProgress} from "@mui/material";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto.js";
 import {useRef, useState} from "react";
 import {uploadFile} from "../../../data/firebase/firebaseStorage.js";
-import {setUser} from "../../../data/store/authSlice.js";
+import {setLoggedInUser} from "../../../data/store/authSlice.js";
+import store from "../../../data/store/store.js";
+import {setUser} from "../../../data/store/usersSlice.js";
 
 export const userEditScreenLoader = async ({params}) => {
   const userId = params.userId
@@ -24,13 +26,15 @@ export const userEditScreenLoader = async ({params}) => {
 
 export const userEditScreenAction = async ({request}) => {
   const formData = await request.formData();
+  const userId = formData.get("userId")
   const user = {
+    id: userId,
     username: formData.get("username"),
     name: formData.get("name"),
     bio: formData.get("bio"),
     imageUrl: formData.get("imageUrl"),
   }
-  const userId = formData.get("userId")
+  store.dispatch(setUser(user))
   await saveUser(userId, user)
   return redirect(`/app/users/${userId}`)
 }

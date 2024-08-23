@@ -1,21 +1,22 @@
 import {useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {usersSelector} from "../../../data/store/usersSlice.js";
 
-const HomeFriendView = () => {
+const HomeFriendView = ({friendId}) => {
   const navigate = useNavigate();
+  const user = useSelector(state => usersSelector.selectById(state, friendId))
 
-  const friend = {
-    id: "nebitan",
-    name: "Bik",
-    imageUrl: "https://easydrawingguides.com/wp-content/uploads/2022/07/bull-head-_-face-11.png"
+  if (!user) {
+    return null
   }
 
   return (
     <button
       className={"flex flex-col w-12 items-center"}
-      onClick={() => navigate(`/app/users/${friend.id}`)}
+      onClick={() => navigate(`/app/users/${user.id}`)}
     >
-      <img className={"w-12 h-12 rounded-full border-2 border-blue-800"} src={friend.imageUrl} alt={friend.name} />
-      <p>{friend.name}</p>
+      <img className={"w-12 h-12 rounded-full border-2 border-blue-800"} src={user.imageUrl} alt={user.name}/>
+      <p>{user.username}</p>
     </button>
   )
 }

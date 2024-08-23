@@ -6,13 +6,14 @@ import App from './App.jsx'
 import {createBrowserRouter, RouterProvider,} from "react-router-dom";
 import LoginScreen, {loginScreenAction} from "./ui/auth/LoginScreen.jsx";
 import AppLayout, {appLayoutLoader} from "./ui/app/AppLayout.jsx";
-import HomeScreen, {homeScreenLoader} from "./ui/app/home/HomeScreen.jsx";
-import MessagesScreen from "./ui/app/messages/MessagesScreen.jsx";
+import HomeScreen from "./ui/app/home/HomeScreen.jsx";
+import MessagesScreen, {messagesScreenLoader} from "./ui/app/messages/MessagesScreen.jsx";
 import NewPostScreen, {newPostAction} from "./ui/app/new-post/NewPostScreen.jsx";
 import {Provider} from "react-redux";
 import store from "./data/store/store.js";
 import UserScreen, {userScreenLoader} from "./ui/app/users/UserScreen.jsx";
 import UserEditScreen, {userEditScreenAction, userEditScreenLoader} from "./ui/app/users/UserEditScreen.jsx";
+import ExploreScreen from "./ui/app/explore/ExploreScreen.jsx";
 
 const router = createBrowserRouter([
   {
@@ -31,12 +32,16 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/app/home",
-        loader: homeScreenLoader,
         element: <HomeScreen/>,
       },
       {
-        path: "/app/messages",
+        path: "/app/explore",
+        element: <ExploreScreen/>,
+      },
+      {
+        path: "/app/messages/:userId",
         element: <MessagesScreen/>,
+        loader: messagesScreenLoader,
       },
       {
         path: "/app/new",

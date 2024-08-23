@@ -13,10 +13,11 @@ const postsSlice = createSlice({
   reducers: {
     setPost: postsAdapter.setOne,
     setPosts: postsAdapter.setMany,
+    clearPosts: postsAdapter.removeAll,
   },
 })
 
-export const {setPost, setPosts} = postsSlice.actions;
+export const {setPost, setPosts, clearPosts} = postsSlice.actions;
 
 export const postsSelector = postsAdapter.getSelectors((state) => state.posts)
 

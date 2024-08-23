@@ -1,7 +1,21 @@
 import MessagesUserView from "./MessagesUserView.jsx";
 import MessagesMessageView from "./MessagesMessageView.jsx";
+import {getMessagesByUser, getUserById} from "../../../data/firebase/firebaseDatabase.js";
+import {redirect, useLoaderData} from "react-router-dom";
+
+export const messagesScreenLoader = async ({params}) => {
+  const userId = params.userId
+  const user = await getUserById(userId)
+  if (!user) {
+    return redirect('/app/home')
+  }
+  const messages = await getMessagesByUser(userId)
+  return {user, messages}
+}
 
 const MessagesScreen = () => {
+  const {user, messages} = useLoaderData()
+
   return (
     <div className={"h-screen w-full flex justify-center items-center"}>
       {/*chat*/}
@@ -18,9 +32,9 @@ const MessagesScreen = () => {
           {/*listing messages*/}
           <div className={"h-4/5 w-full p-4 pb-0"}>
             <div className={"h-full w-full flex flex-col gap-2 p-2 bg-blue-100"}>
-              <MessagesMessageView ownMessage={true}/>
-              <MessagesMessageView ownMessage={false}/>
-              <MessagesMessageView ownMessage={true}/>
+              {messages.map((message, index) => (
+                <MessagesMessageView key={index} message={message}/>
+              ))}
             </div>
           </div>
           {/*writing messages*/}

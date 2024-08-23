@@ -1,8 +1,8 @@
 import {Link} from "react-router-dom";
 import {getLoggedInUser} from "../../../data/firebase/firebaseAuth.js";
 
-const HomeUserView = ({user}) => {
-  const isLoggedInUser = user.id === getLoggedInUser().id
+const HomeProfileView = () => {
+  const user = getLoggedInUser()
 
   return (
     <div className={"flex h-12 w-full gap-2"}>
@@ -13,13 +13,8 @@ const HomeUserView = ({user}) => {
         </Link>
         <p className={"text-sm"}>{user.name}</p>
       </div>
-      {!isLoggedInUser &&
-        <button className={"text-blue-800"}>
-          Follow
-        </button>
-      }
     </div>
   )
 }
 
-export default HomeUserView
+export default HomeProfileView

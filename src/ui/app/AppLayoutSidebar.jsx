@@ -7,10 +7,11 @@ import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Face2Icon from '@mui/icons-material/Face2';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import {signOutUser} from "../../data/firebase/firebaseAuth.js";
+import {getLoggedInUser, signOutUser} from "../../data/firebase/firebaseAuth.js";
 
 const AppLayoutSidebar = () => {
   const navigate = useNavigate();
+  const loggedInUser = getLoggedInUser()
 
   const logout = async () => {
     await signOutUser()
@@ -18,7 +19,7 @@ const AppLayoutSidebar = () => {
   }
 
   return (
-    <div className={"h-screen w-80 flex flex-col bg-blue-600 p-4"}>
+    <div className={"h-screen w-80 flex flex-col bg-blue-600 p-4 flex-shrink-0"}>
       <div className={"flex gap-2 items-center px-2"}>
         <Face2Icon className={"text-white"} fontSize={"large"} />
         <h1 className={"font-sans text-4xl font-bold text-white"}>Instać</h1>
@@ -29,7 +30,7 @@ const AppLayoutSidebar = () => {
       <SidebarButton onClick={() => navigate("/app/search")} icon={<SearchIcon/>}>Search</SidebarButton>
       <SidebarButton onClick={() => navigate("/app/explore")} icon={<ExploreIcon/>}>Explore</SidebarButton>
       <SidebarButton onClick={() => navigate("/app/messages")} icon={<ForumIcon/>}>Messages</SidebarButton>
-      <SidebarButton onClick={() => navigate("/app/profile")} icon={<PersonIcon/>}>Profile</SidebarButton>
+      <SidebarButton onClick={() => navigate(`/app/users/${loggedInUser.id}`)} icon={<PersonIcon/>}>Profile</SidebarButton>
       <div className={"flex-grow"} />
       <SidebarButton onClick={logout} icon={<LogoutIcon/>}>Logout</SidebarButton>
     </div>
